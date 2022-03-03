@@ -1,7 +1,32 @@
 #include <iostream>
 
 int main() {
-    
+    int n;
+    std::string s;
+    bool correct;
+    do {
+        correct = true;
+        std::cout << "Input shift: " << std::endl;
+        std::cin >> n;
+        if (/*std::cin.fail() ||*/ n == 0) {
+            correct = false;
+            // std::cin.clear();
+            // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Wrong shift input!" << std::endl;          
+        }
+    } while (!correct);
+    do {
+        correct = true;
+        std::cout << "Input string: " << std::endl;
+        std::cin >> s;
+        for (int i = 0; i < s.length() && correct; i++) {
+            if ((s[i] < 'A' || s[i] > 'Z')
+                && (s[i] < 'a' || s[i] > 'z')) {
+                correct = false;
+                std::cout << "Wrong string input!" << std::endl;
+            }
+        }
+    } while (!correct);
     return 0;
 }
 
