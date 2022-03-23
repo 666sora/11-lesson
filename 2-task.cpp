@@ -48,30 +48,26 @@ int main() {
         if (s2.length() < 1 || s2.length() > 63) correct = false;
         if (s1[s1.length() - 1] == '.') correct = false;
         if (s2[0] == '.') correct = false;
-        if (correct) {
-            bool nonDict;
-            for (int i = 0; i < s1.length() && correct; i++) {
-                nonDict = false;
-                for (int j = 0; j < dict.length() && !nonDict; j++) {
-                    if (s1[i] == dict[j]) {
-                        nonDict = true;
-                    }
-                }
-                if ((s1[i] < 'A' || s1[i] > 'Z') && (s1[i] < 'a'
-                    || s1[i] > 'z') && (s1[i] < '0' || s1[i] > '9') && !nonDict) {
-                    correct = false;
+        bool nonDict;
+        for (int i = 0; i < s1.length() && correct; i++) {
+            nonDict = false;
+            for (int j = 0; j < dict.length() && !nonDict; j++) {
+                if (s1[i] == dict[j]) {
+                    nonDict = true;
                 }
             }
-            if (correct) {
-                for (int i = 0; i < s2.length() && correct; i++) {
-                    if ((s2[i] < 'A' || s2[i] > 'Z') && (s2[i] < 'a'
-                        || s2[i] > 'z') && (s2[i] < '0' || s2[i] > '9')
-                        && s2[i] != '-' && s2[i] != '.') {
-                        correct = false;
-                    }
-                }
+            if ((s1[i] < 'A' || s1[i] > 'Z') && (s1[i] < 'a'
+                    || s1[i] > 'z') && (s1[i] < '0' || s1[i] > '9') && !nonDict) {
+                correct = false;
             }
         }
+        for (int i = 0; i < s2.length() && correct; i++) {
+            if ((s2[i] < 'A' || s2[i] > 'Z') && (s2[i] < 'a'
+                    || s2[i] > 'z') && (s2[i] < '0' || s2[i] > '9')
+                    && s2[i] != '-' && s2[i] != '.') {
+                correct = false;
+            }
+        } 
     }
     if (correct) {
         std::cout << "Yes";
