@@ -119,7 +119,56 @@ int main() {
     // std::cout << std::endl << dotPos1 << std::endl << dotPos2;
     // std::cout << std::endl << "1.1 " << s1Part1 << std::endl << "1.2 " << s1Part2 << std::endl
     //    << "2.1 " << s2Part1 << std::endl << "2.2 " << s2Part2;
-    
+    bool less = false, more = false, equal = false;
+    if (s1Part1[0] == '-' && s2Part1[0] != '-') {
+        less = true;
+    }
+    else if (s1Part1[0] != '-' && s2Part1[0] == '-') {
+        more = true;
+    }
+    else if (s1Part1[0] != '-' && s2Part1[0] != '-') {
+        int end = (s1Part1.length() >= s2Part1.length() ? s2Part1.length() : s1Part1.length());
+        bool valueS1 = false, valueS2 = false;
+        int i = 0, j = 0;
+        while (!valueS1) {
+            if (s1Part1[i] == '0' && !valueS1) {
+                i++;
+            }
+            else if (s1Part1[i] != '0') {
+                valueS1 = true;
+            }
+        }
+        while (!valueS2) {
+            if (s2Part1[j] == '0' && !valueS2) {
+                j++;
+            }
+            else if (s2Part1[j] != '0') {
+                valueS2 = true;
+            }
+        }
+        for (int start = (i >= j ? j : i); start < end && !more && !less; start++) {
+            if (s1Part1[i] > s2Part1[j]) {
+                more = true;
+            }
+            else if (s1Part1[i] < s2Part1[j]) {
+                less = true;
+            }
+            else {
+                i++;
+                j++;
+            }
+        }
+        equal = (!more && !less ? true : false);
+    }
+    if (less) {
+            std::cout << "Less";
+    }
+    if (more) {
+            std::cout << "More";
+    }
+    if (equal) {
+            std::cout << "Equal";
+    }
 }
 
 /*
