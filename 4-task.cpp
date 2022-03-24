@@ -159,15 +159,146 @@ int main() {
             }
         }
         equal = (!more && !less ? true : false);
+        if (equal) {
+            bool valueS1 = false, valueS2 = false;
+            int i = s1Part2.length() - 1, j = s2Part2.length() - 1;
+            while (!valueS1) {
+                if (s1Part2[i] == '0' && !valueS1) {
+                    i--;
+                }
+                else if (s1Part2[i] != '0') {
+                    valueS1 = true;
+                }
+            }
+            while (!valueS2) {
+                if (s2Part2[j] == '0' && !valueS2) {
+                    j--;
+                }
+                else if (s2Part2[j] != '0') {
+                    valueS2 = true;
+                }
+            }
+            int end = (i > j ? j : i);
+            for (int k = 0; k <= end && !less && !more; k++) {
+                if (s1Part2[k] > s2Part2[k]) {
+                    more = true;
+                }
+                else if (s1Part2[k] < s2Part2[k]) {
+                    less = true;
+                }
+            }
+        }
+        if (less || more) {
+            equal = false;
+        }
+    }
+    else if (s1Part1[0] == '-' && s2Part1[0] == '-') {
+        if (s1Part1.length() == 1 && s2Part1.length() == 1) {
+            equal = true;
+        }
+        else if (s1Part1[0] == '-' && s1Part1.length() == 1 && s2Part1.length() > 1) {
+            bool value = false;
+            for (int i = 0; i < s2Part1.length() && !value; i++) {
+                if (s2Part1[i] != '0') {
+                    value = true;
+                }
+            }
+            if (value) {
+                more = true;
+            }
+            else {
+                equal = true;
+            }
+        }
+        else if (s2Part1[0] == '-' && s2Part1.length() == 1 && s1Part1.length() > 1) {
+            bool value = false;
+            for (int i = 0; i < s1Part1.length() && !value; i++) {
+                if (s1Part1[i] != '0') {
+                    value = true;
+                }
+            }
+            if (value) {
+                less = true;
+            }
+            else {
+                equal = true;
+            }
+        }
+        else if (s1Part1.length() > 1 && s2Part1.length() > 1) {
+            int end = (s1Part1.length() >= s2Part1.length() ? s2Part1.length() : s1Part1.length());
+            bool valueS1 = false, valueS2 = false;
+            int i = 1, j = 1;
+            while (!valueS1) {
+                if (s1Part1[i] == '0' && !valueS1) {
+                    i++;
+                }
+                else if (s1Part1[i] != '0') {
+                    valueS1 = true;
+                }
+            }
+            while (!valueS2) {
+                if (s2Part1[j] == '0' && !valueS2) {
+                    j++;
+                }
+                else if (s2Part1[j] != '0') {
+                    valueS2 = true;
+                }
+            }
+            for (int start = (i >= j ? j : i); start < end && !more && !less; start++) {
+                if (s1Part1[i] > s2Part1[j]) {
+                    less = true;
+                }
+                else if (s1Part1[i] < s2Part1[j]) {
+                    more = true;
+                }
+                else {
+                    i++;
+                    j++;
+                }
+            }
+            equal = (!more && !less ? true : false);
+        }
+        if (equal) {
+            bool valueS1 = false, valueS2 = false;
+            int i = s1Part2.length() - 1, j = s2Part2.length() - 1;
+            while (!valueS1) {
+                if (s1Part2[i] == '0' && !valueS1) {
+                    i--;
+                }
+                else if (s1Part2[i] != '0') {
+                    valueS1 = true;
+                }
+            }
+            while (!valueS2) {
+                if (s2Part2[j] == '0' && !valueS2) {
+                    j--;
+                }
+                else if (s2Part2[j] != '0') {
+                    valueS2 = true;
+                }
+            }
+            int end = (i > j ? j : i);
+            for (int k = 0; k <= end && !less && !more; k++) {
+                if (s1Part2[k] > s2Part2[k]) {
+                    less = true;
+                }
+                else if (s1Part2[k] < s2Part2[k]) {
+                    more = true;
+                }
+            }
+        }
+        if (less || more) {
+            equal = false;
+        }
     }
     if (less) {
-            std::cout << "Less";
+        std::cout << "Less";
     }
     if (more) {
-            std::cout << "More";
+        std::cout << "More";
     }
     if (equal) {
-            std::cout << "Equal";
+        std::cout << "Equal";
     }
 }
 
