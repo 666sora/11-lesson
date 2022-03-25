@@ -146,7 +146,7 @@ int main() {
                 valueS2 = true;
             }
         }
-        for (int start = (i >= j ? j : i); start < end && !more && !less; start++) {
+        for (int start = (i >= j ? j : i); start <= end && !more && !less; start++) {
             if (s1Part1[i] > s2Part1[j]) {
                 more = true;
             }
@@ -244,7 +244,7 @@ int main() {
                     valueS2 = true;
                 }
             }
-            for (int start = (i >= j ? j : i); start < end && !more && !less; start++) {
+            for (int start = (i >= j ? j : i); start <= end && !more && !less; start++) {
                 if (s1Part1[i] > s2Part1[j]) {
                     less = true;
                 }
