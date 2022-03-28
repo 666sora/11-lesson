@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 std::string encrypt_caesar(int n, std::string s) {
     for (int i = 0; i < s.length(); i++) {
@@ -28,7 +29,7 @@ std::string encrypt_caesar(int n, std::string s) {
     return s;
 }
 
-std::string decrypt_caesar (int n, std::string s) {
+std::string decrypt_caesar(int n, std::string s) {
     n = -n;
     return encrypt_caesar(n, s);
 }
@@ -39,6 +40,18 @@ int main() {
     bool correct;
     do {
         correct = true;
+        std::cout << "Input string: " << std::endl;
+        std::getline(std::cin, s);
+        for (int i = 0; i < s.length() && correct; i++) {
+            if ((s[i] < 'A' || s[i] > 'Z')
+                && (s[i] < 'a' || s[i] > 'z') && s[i] != ' ') {
+                correct = false;
+                std::cout << "Wrong string input!" << std::endl;
+            }
+        }
+    } while (!correct);
+    do {
+        correct = true;
         std::cout << "Input shift: " << std::endl;
         std::cin >> n;
         if (/*std::cin.fail() ||*/ n == 0) {
@@ -46,18 +59,6 @@ int main() {
             // std::cin.clear();
             // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Wrong shift input!" << std::endl;
-        }
-    } while (!correct);
-    do {
-        correct = true;
-        std::cout << "Input string: " << std::endl;
-        std::cin >> s;
-        for (int i = 0; i < s.length() && correct; i++) {
-            if ((s[i] < 'A' || s[i] > 'Z')
-                && (s[i] < 'a' || s[i] > 'z')) {
-                correct = false;
-                std::cout << "Wrong string input!" << std::endl;
-            }
         }
     } while (!correct);
     do {
