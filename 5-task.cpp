@@ -96,8 +96,8 @@ int main() {
     }
     int vanya, petya;
     if (correct) {
-        vanya = findWinner(s1, s2, s3, 'X');
-        petya = findWinner(s1, s2, s3, 'O');
+        vanya = findWinner(s1, s2, s3, 'O');
+        petya = findWinner(s1, s2, s3, 'X');
         if (vanya == -1 || petya == -1) {
             correct = false;
         }
@@ -124,8 +124,7 @@ int main() {
         std::cout << "Vanya won";
     }
     else if (petya == 1) {
-        std::cout << "Petya
- won";
+        std::cout << "Petya won";
     }
 }
 
