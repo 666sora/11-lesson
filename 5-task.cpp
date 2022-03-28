@@ -121,10 +121,11 @@ int main() {
         std::cout << "Nobody";
     }
     else if (vanya == 1) {
-        std::cout << "Petya won";
+        std::cout << "Vanya won";
     }
     else if (petya == 1) {
-        std::cout << "Vanya won";
+        std::cout << "Petya
+ won";
     }
 }
 
