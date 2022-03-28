@@ -106,10 +106,10 @@ int main() {
         }
         else if ((vanya == 1 && petya == 0) 
                 || (vanya == 0 && petya == 1)) {
-            if (vanya == 1 && countO >= countX) {
+            if (petya == 1 && countO >= countX) {
                 correct = false;
             }
-            else if (petya == 1 && countX > countO) {
+            else if (vanya == 1 && countX > countO) {
                 correct = false;
             } 
         }
