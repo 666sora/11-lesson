@@ -134,7 +134,6 @@ int main() {
     }
     else if (s1Part1[0] != '-' && s2Part1[0] != '-') {
         int end = (s1Part1.length() >= s2Part1.length() ? s2Part1.length() : s1Part1.length());
-        bool valueS1 = false, valueS2 = false;
         int i = findValuePosForPart1(s1Part1), j = findValuePosForPart1(s2Part1);
         for (int start = (i >= j ? j : i); start <= end && !more && !less; start++) {
             if (s1Part1[i] > s2Part1[j]) {
