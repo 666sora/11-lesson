@@ -17,72 +17,78 @@ std::string findPart(std::string s, int part, int dotPos) {
     return string;
 }
 
+int findDot(std::string s) {
+    for (int i = 0; i < s.length(); i++) {
+        if (s[i] == '.') {
+            return i;
+        }
+    }
+    return -1;
+}
+
+bool validation(std::string s, bool correct) {
+    bool proper = true;
+    bool value = false;
+    bool point = false;
+    bool minus = false;
+    for (int i = 0; i < s.length() && proper == true; i++) {
+        if (minus == false && s[0] == '-') {
+            minus = true;
+        }
+        else if (s[i] == '-' && i != 0) {
+            proper = false;
+        }
+        if (point == false && s[i] == '.') {
+            point = true;
+        }
+        else if (s[i] == '.') {
+            proper = false;
+        }
+        if ((s[i] > '9' || s[i] < '0') && (s[i] != 45 && s[i] != 46)) {
+            proper = false;
+        }
+        if (s[i] <= '9' && s[i] >= '0') {
+            value = true;
+        }
+    }
+    if (proper && value) {
+        return true;
+    }
+    else {
+        return correct;
+    }
+}
+
+int findValuePosForPart1(std::string s) {
+    int i = 0;
+    while (i < s.length()) {
+        if (s[i] == '0' || s[i] == '-') {
+            i++;
+        }
+        else if (s[i] != '0' && s[i] != '-') {
+            return i;
+        }
+    }
+}
+
+std::string zeroForPart2(std::string s, int count) {
+    for (int i = 0; i < count; i++) {
+        s += '0';
+    }
+    return s;
+}
+
 int main() {
     bool correct = false;
-    int dotPos1 = -1, dotPos2 = -1;
     std::string s1, s2;
     while (!correct) {
         std::cout << "Input float numbers: " << std::endl;
         std::cin >> s1 >> s2;
-        bool proper = true;
-        bool value = false;
-        bool point = false;
-        bool minus = false;
-        for (int i = 0; i < s1.length() && proper == true; i++) {
-            if (minus == false && s1[0] == '-') {
-                minus = true;
-            }
-            else if (s1[i] == '-' && i != 0) {
-                proper = false;
-            }
-            if (point == false && s1[i] == '.') {
-                point = true;
-                dotPos1 = i;
-            }
-            else if (s1[i] == '.') {
-                proper = false;
-            }
-            if ((s1[i] > '9' || s1[i] < '0') && (s1[i] != 45 && s1[i] != 46)) {
-                proper = false;
-            }
-            if (s1[i] <= '9' && s1[i] >= '0') {
-                value = true;
-            }
-        }
-        if (proper && value) {
-            correct = true;
-        }
-        else std::cout << "Invalid input" << std::endl;
-        proper = true;
-        value = false;
-        point = false;
-        minus = false;
-        for (int i = 0; i < s2.length() && proper == true; i++) {
-            if (minus == false && s2[0] == '-') {
-                minus = true;
-            }
-            else if (s2[i] == '-' && i != 0) {
-                proper = false;
-            }
-            if (point == false && s2[i] == '.') {
-                point = true;
-                dotPos2 = i;
-            }
-            else if (s2[i] == '.') {
-                proper = false;
-            }
-            if ((s2[i] > '9' || s2[i] < '0') && (s2[i] != 45 && s2[i] != 46)) {
-                proper = false;
-            }
-            if (s2[i] <= '9' && s2[i] >= '0') {
-                value = true;
-            }
-        }
-        if (!proper || !value) {
-            correct = false;
-            std::cout << "Invalid input";
-        }
+        correct = validation(s1, correct);
+        correct = validation(s1, correct);
+        if (!correct) std::cout << "Invalid input" << std::endl;
     }
+    int dotPos1 = findDot(s1), dotPos2 = findDot(s2);
     std::string s1Part1 = "";
     std::string s1Part2 = "";
     std::string s2Part1 = "";
@@ -129,23 +135,7 @@ int main() {
     else if (s1Part1[0] != '-' && s2Part1[0] != '-') {
         int end = (s1Part1.length() >= s2Part1.length() ? s2Part1.length() : s1Part1.length());
         bool valueS1 = false, valueS2 = false;
-        int i = 0, j = 0;
-        while (!valueS1) {
-            if (s1Part1[i] == '0' && !valueS1) {
-                i++;
-            }
-            else if (s1Part1[i] != '0') {
-                valueS1 = true;
-            }
-        }
-        while (!valueS2) {
-            if (s2Part1[j] == '0' && !valueS2) {
-                j++;
-            }
-            else if (s2Part1[j] != '0') {
-                valueS2 = true;
-            }
-        }
+        int i = findValuePosForPart1(s1Part1), j = findValuePosForPart1(s2Part1);
         for (int start = (i >= j ? j : i); start <= end && !more && !less; start++) {
             if (s1Part1[i] > s2Part1[j]) {
                 more = true;
@@ -160,26 +150,14 @@ int main() {
         }
         equal = (!more && !less ? true : false);
         if (equal) {
-            bool valueS1 = false, valueS2 = false;
-            int i = s1Part2.length() - 1, j = s2Part2.length() - 1;
-            while (!valueS1) {
-                if (s1Part2[i] == '0' && !valueS1) {
-                    i--;
-                }
-                else if (s1Part2[i] != '0') {
-                    valueS1 = true;
-                }
+            if (s1Part2.length() > s2Part2.length()) {
+                s2Part2 = zeroForPart2(s2Part2, s1Part2.length() - s2Part2.length());
             }
-            while (!valueS2) {
-                if (s2Part2[j] == '0' && !valueS2) {
-                    j--;
-                }
-                else if (s2Part2[j] != '0') {
-                    valueS2 = true;
-                }
+            else if (s1Part2.length() < s2Part2.length()) {
+                s1Part2 = zeroForPart2(s1Part2, s2Part2.length() - s1Part2.length());
             }
-            int end = (i > j ? j : i);
-            for (int k = 0; k <= end && !less && !more; k++) {
+            int end = s1Part2.length();
+            for (int k = 0; k < end && !less && !more; k++) {
                 if (s1Part2[k] > s2Part2[k]) {
                     more = true;
                 }
@@ -227,23 +205,7 @@ int main() {
         else if (s1Part1.length() > 1 && s2Part1.length() > 1) {
             int end = (s1Part1.length() >= s2Part1.length() ? s2Part1.length() : s1Part1.length());
             bool valueS1 = false, valueS2 = false;
-            int i = 1, j = 1;
-            while (!valueS1) {
-                if (s1Part1[i] == '0' && !valueS1) {
-                    i++;
-                }
-                else if (s1Part1[i] != '0') {
-                    valueS1 = true;
-                }
-            }
-            while (!valueS2) {
-                if (s2Part1[j] == '0' && !valueS2) {
-                    j++;
-                }
-                else if (s2Part1[j] != '0') {
-                    valueS2 = true;
-                }
-            }
+            int i = findValuePosForPart1(s1Part1), j = findValuePosForPart1(s2Part1);
             for (int start = (i >= j ? j : i); start <= end && !more && !less; start++) {
                 if (s1Part1[i] > s2Part1[j]) {
                     less = true;
@@ -259,26 +221,14 @@ int main() {
             equal = (!more && !less ? true : false);
         }
         if (equal) {
-            bool valueS1 = false, valueS2 = false;
-            int i = s1Part2.length() - 1, j = s2Part2.length() - 1;
-            while (!valueS1) {
-                if (s1Part2[i] == '0' && !valueS1) {
-                    i--;
-                }
-                else if (s1Part2[i] != '0') {
-                    valueS1 = true;
-                }
+            if (s1Part2.length() > s2Part2.length()) {
+                s2Part2 = zeroForPart2(s2Part2, s1Part2.length() - s2Part2.length());
             }
-            while (!valueS2) {
-                if (s2Part2[j] == '0' && !valueS2) {
-                    j--;
-                }
-                else if (s2Part2[j] != '0') {
-                    valueS2 = true;
-                }
+            else if (s1Part2.length() < s2Part2.length()) {
+                s1Part2 = zeroForPart2(s1Part2, s2Part2.length() - s1Part2.length());
             }
-            int end = (i > j ? j : i);
-            for (int k = 0; k <= end && !less && !more; k++) {
+            int end = s1Part2.length();
+            for (int k = 0; k < end && !less && !more; k++) {
                 if (s1Part2[k] > s2Part2[k]) {
                     less = true;
                 }
