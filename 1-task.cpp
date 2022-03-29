@@ -30,8 +30,7 @@ std::string encrypt_caesar(int n, std::string s) {
 }
 
 std::string decrypt_caesar(int n, std::string s) {
-    n = -n;
-    return encrypt_caesar(n, s);
+    return encrypt_caesar(-n, s);
 }
 
 int main() {
@@ -67,10 +66,10 @@ int main() {
         std::cout << "Choice from encrypt or decrypt(e/d)";
         std::cin >> answer;
         if (answer == 'e') {
-            std::cout << encrypt_caesar(n, s);
+            std::cout << encrypt_caesar(n % 26, s);
         }
         else if (answer == 'd') {
-            std::cout << decrypt_caesar(n, s);
+            std::cout << decrypt_caesar(n % 26, s);
         }
         else {
             std::cout << "Error answer input!" << std::endl;
