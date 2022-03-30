@@ -18,6 +18,19 @@ char findElementForX(std::string s1, std::string s2, std::string s3, int x, int 
 char findElementForY(std::string s1, std::string s2, std::string s3, int x, int y) {
     return findElementForX(s1, s2, s3, y, x);
 }
+
+bool validation (std::string s1, std::string s2, std::string s3, bool correct) {
+    for (int y = 0; y < 3; y++) {
+        for (int x = 0; x < 3; x++) {
+            char element = findElementForX(s1, s2, s3, x, y);
+            if (element != 'O' && element != 'X' && element != '.') {
+                return false;
+            }
+        }
+    }
+    return correct;
+}
+
 int findWinner(std::string s1, std::string s2, std::string s3, char symbol) {
     int counterX = 0, counterY = 0, counterXY = 0, counterYX = 0;
     bool win = false;
@@ -44,13 +57,13 @@ int findWinner(std::string s1, std::string s2, std::string s3, char symbol) {
             counterYX++;
         }
         //
-        if (counterXY == 3 && !win) {
+        if ((counterXY == 3 && counterYX == 3 && symbol == 'X') || (counterXY == 3 && !win)) {
             win = true;
         }
         else if (counterXY == 3 && win) {
             return -1;
         }
-        if (counterYX == 3 && !win) {
+        if ((counterXY == 3 && counterYX == 3 && symbol == 'X') || (counterYX == 3 && !win)) {
             win = true;
         }
         else if (counterYX == 3 && win) {
@@ -86,7 +99,6 @@ int main() {
     for (int y = 0; y < 3 && correct; y++) {
         for (int x = 0; x < 3 && correct; x++) {
             char element = findElementForX(s1, s2, s3, x, y);
-            correct = (element != 'O' && element != 'X' && element != '.' ? false : correct);
             countX += (element == 'X' ? 1 : 0);
             countO += (element == 'O' ? 1 : 0);
         }
@@ -94,6 +106,10 @@ int main() {
     if (countX < countO) {
         correct = false;
     }
+    if (countO < countX - 1) {
+        correct = false;
+    }
+    correct = validation(s1, s2, s3, correct);
     int vanya, petya;
     if (correct) {
         vanya = findWinner(s1, s2, s3, 'O');
